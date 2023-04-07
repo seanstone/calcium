@@ -60,7 +60,7 @@ fmpz_mpoly_vec_init(fmpz_mpoly_vec_t vec, slong len, const fmpz_mpoly_ctx_t ctx)
     else
     {
         slong i;
-        vec->p = flint_malloc(sizeof(fmpz_mpoly_struct) * len);
+        vec->p = (fmpz_mpoly_struct*)flint_malloc(sizeof(fmpz_mpoly_struct) * len);
         for (i = 0; i < len; i++)
             fmpz_mpoly_init(vec->p + i, ctx);
         vec->length = vec->alloc = len;
@@ -101,7 +101,7 @@ fmpz_mpoly_vec_fit_length(fmpz_mpoly_vec_t vec, slong len, const fmpz_mpoly_ctx_
         if (len < 2 * vec->alloc)
             len = 2 * vec->alloc;
 
-        vec->p = flint_realloc(vec->p, len * sizeof(fmpz_mpoly_struct));
+        vec->p = (fmpz_mpoly_struct*)flint_realloc(vec->p, len * sizeof(fmpz_mpoly_struct));
 
         for (i = vec->alloc; i < len; i++)
             fmpz_mpoly_init(vec->p + i, ctx);
@@ -215,7 +215,7 @@ pairs_fit_length(pairs_t vec, slong len)
         if (len < 2 * vec->alloc)
             len = 2 * vec->alloc;
 
-        vec->pairs = flint_realloc(vec->pairs, len * sizeof(pair_t));
+        vec->pairs = (pair_t*)flint_realloc(vec->pairs, len * sizeof(pair_t));
         vec->alloc = len;
     }
 }
